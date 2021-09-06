@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist", //where the compiled code will be generated
+    "module": "commonjs", //the target format that the import/export will have
+    "target": "es2019", //the default pattern with features that node aceppts, and can be viewed in https://node.green/
+    "esModuleInterop": true, //allows using export/import in modules that works with "require"
+    "allowJs": true //allow js files if necessary
+  }
+}
