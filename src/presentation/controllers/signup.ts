@@ -23,7 +23,7 @@ export class SignUpController {
     if (!this.emailValidator.isValid(httpRequest.body.email)) {
       return {
         statusCode: 400,
-        body: new Error('email'),
+        body: new Error('Invalid Param: email'),
       };
     }
 
