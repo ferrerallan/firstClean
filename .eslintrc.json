@@ -21,6 +21,8 @@
         "import/no-unresolved": "off",
         "import/extensions": "off",
         "no-restricted-syntax": "off",
-        "no-unused-vars": "off"
+        "no-unused-vars": "off",
+        "linebreak-style":"off",
+        "max-classes-per-file":"off"
     }
 }

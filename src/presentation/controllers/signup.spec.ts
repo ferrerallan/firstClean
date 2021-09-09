@@ -1,3 +1,6 @@
+/* eslint-disable max-classes-per-file */
+import { AccountModel } from '../../domain/models/account';
+import { AddAccount, AddAccountModel } from '../../domain/usecases/addAccount';
 import { IEmailValidator } from '../protocols/IEmailValidator';
 import { SignUpController } from './signup';
 
@@ -6,6 +9,22 @@ interface sutTypes {
   emailValidator: IEmailValidator
 }
 // factory
+const makeAddAccount = (): AddAccount => {
+  class AddAccountStub implements AddAccount {
+    add(account:AddAccountModel) : AccountModel {
+      const fakeAccount = {
+        id: 'valid_id',
+        name: 'valid_name',
+        email: 'valid_email',
+        password: 'valid_password',
+      };
+
+      return fakeAccount;
+    }
+  }
+  return new AddAccountStub();
+};
+
 const makeSut = (): sutTypes => {
   class EmailValidatorStub implements IEmailValidator {
     isValid(email: string): boolean {
@@ -72,5 +91,23 @@ describe('SignUp Controller', () => {
     };
     const httpResponse = sut.handle(httpRequest);
     expect(isValidSpy).toHaveBeenCalledWith('any_email@email.com');
+  });
+  test('Should call AddAccount with correct values', () => {
+    const { sut, addAccountStub } = makeSut();
+    const addSpy = jest.spyOn(addAccountStub, 'add');
+    const httpRequest = {
+      body: {
+        email: 'any_email@email.com',
+        name: 'allan',
+        password: 'any_password',
+        passwordConfirmation: 'any_password',
+      },
+    };
+    sut.handle(httpRequest);
+    expect(addSpy).toHaveBeenCalledWith({
+      email: 'any_email@email.com',
+      name: 'allan',
+      password: 'any_password'}
+    );
   });
 });
